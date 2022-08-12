@@ -39,14 +39,21 @@ class _VideoWidgetState extends State<VideoWidget> {
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Chewie(
-            key: PageStorageKey(widget.url),
-            controller: ChewieController(
-              videoPlayerController: videoPlayerController,
-              autoInitialize: true,
-              looping: false,
-              autoPlay: false,
-            ),
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: AspectRatio(
+              aspectRatio: videoPlayerController.value.aspectRatio,
+              child: Chewie(
+                key: PageStorageKey(widget.url),
+                controller: ChewieController(
+                  maxScale: 0.8,
+                  aspectRatio: videoPlayerController.value.aspectRatio,
+                  videoPlayerController: videoPlayerController,
+                  autoInitialize: true,
+                  looping: false,
+                  autoPlay: false,
+                ),
+              ))
           );
         } else {
           return const Center(
